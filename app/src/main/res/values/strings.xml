@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Luyện tập</string>
+
+    <string name="push_up">Chống đẩy</string>
+    <string name="squats">Đứng lên ngồi xuống</string>
+    <string name="crunches">Gập bụng</string>
+    <string name="up_bar">Lên xà</string>
+    <string name="climb">Leo thang</string>
+
+    <string name="no_ex">Tuyệt vời, không có bài tập nào cần làm bây giờ cả!</string>
+    <string name="has_ex">Bạn cần hoàn thành các bài tập sau: </string>
+
+    <string name="missing_ex">Bạn đã không hoàn thành bài tập này đúng hạn, hãy cố gắng hơn vào lần sau.</string>
+    <string name="completed_ex">Chúc mừng, bạn đã hoàn thành tốt bài tập!</string>
+    <string name="pending_ex">Hãy hoàn thành các bài tập trên trước khi hết giờ.</string>
+    <string name="future_ex">Bài tập chưa bắt đầu, hãy quay lại sau nhé!</string>
+
+    <string name="complete_button">Hoàn thành</string>
+
+    <string name="ex_add">Nhập bài tập mới</string>
+    <string name="ex_name">Tên bài tập</string>
+    <string name="ex_item">Số lượng</string>
+
+    <string name="menu_ex_name">Sửa tên</string>
+    <string name="menu_ex_item">Sửa số lượng</string>
+    <string name="menu_ex_delete">Xóa bài tập</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home_fragment">Trang chủ</string>
+    <string name="statistic_fragment">Thống kê</string>
+    <string name="setting_fragment">Cài đặt</string>
+    <string name="exercise_fragment">Bài tập</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/white"/>
+    <item android:drawable="@drawable/ic_muscles_logo"
+        android:gravity="center"
+        android:width="113.587dp"
+        android:height="96.945dp"/>
+</layer-list>

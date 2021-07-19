@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="time_step">
+        <item>11</item>
+        <item>15</item>
+        <item>20</item>
+        <item>23</item>
+        <item>27</item>
+    </integer-array>
+
+    <string-array name="part">
+        <item>Sáng</item>
+        <item>Trưa</item>
+        <item>Chiều</item>
+        <item>Tối</item>
+        <item>Đêm</item>
+    </string-array>
+
+    <string-array name="part_ex">
+        <item>morning-ex</item>
+        <item>noon-ex</item>
+        <item>afternoon-ex</item>
+        <item>evening-ex</item>
+        <item>night-ex</item>
+    </string-array>
+
+</resources>
