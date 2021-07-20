@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">Luyện tập</string>
+    <string name="app_shared_pref">app</string>
+
+    <string name="edit">Sửa</string>
+
+    <string name="btn_accept">Đồng ý</string>
+    <string name="btn_cancel">Hủy</string>
+
+    <string name="btn_dev">Xóa toàn bộ dữ liệu</string>
 
     <string name="push_up">Chống đẩy</string>
     <string name="squats">Đứng lên ngồi xuống</string>
@@ -9,6 +17,7 @@
 
     <string name="no_ex">Tuyệt vời, không có bài tập nào cần làm bây giờ cả!</string>
     <string name="has_ex">Bạn cần hoàn thành các bài tập sau: </string>
+    <string name="no_ex_list">Không có bài tập nào được chọn.</string>
 
     <string name="missing_ex">Bạn đã không hoàn thành bài tập này đúng hạn, hãy cố gắng hơn vào lần sau.</string>
     <string name="completed_ex">Chúc mừng, bạn đã hoàn thành tốt bài tập!</string>

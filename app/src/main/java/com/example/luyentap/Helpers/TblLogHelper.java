@@ -54,16 +54,35 @@ public class TblLogHelper {
 
             Calendar now = Calendar.getInstance();
             while (true) {
-                calendar.add(Calendar.DATE, 1);
+//                calendar.add(Calendar.DATE, 1);
+//                android.util.Log.e("day", calendar.toString());
+                Calendar temp = Calendar.getInstance();
+                temp = getNewDay(calendar);
+                temp.add(Calendar.DATE, 1);
+                temp.add(Calendar.MILLISECONDS_IN_DAY, 3600000
+                        * context.getResources().getIntArray(R.array.time_step)[0]);
 
-                if (getNewDay(calendar).after(now)) {
+                if (temp.after(now)) {
                     break;
                 }
 
-                ContentValues values = newLog(getNewDay(calendar).getTimeInMillis());
+                ContentValues values = newLog(temp.getTimeInMillis());
                 long insertId = db.insert(SQLHelper.TBL_LOG, null, values);
+
+                calendar.add(Calendar.DATE, 1);
             }
         }
+
+        close();
+    }
+
+    public void updateLog(Log log) {
+        write();
+
+        ContentValues values = getLog(log);
+
+        db.update(SQLHelper.TBL_LOG, values, SQLHelper.COL_ID_LOG + " = ?",
+                new String[] {String.valueOf(log.getId())});
 
         close();
     }
@@ -83,18 +102,21 @@ public class TblLogHelper {
         cursor.close();
 
         close();
+//        android.util.Log.e("last-log", String.valueOf(result.getCalendar().get(Calendar.DAY_OF_MONTH)));
         return result;
     }
 
     private Calendar getNewDay(Calendar calendar) {
+        Calendar temp = Calendar.getInstance();
+        temp.setTimeInMillis(calendar.getTimeInMillis());
         int resetTime = context.getResources().getIntArray(R.array.time_step)[0];
         resetTime *= 3600000;
 
-        if (calendar.get(Calendar.MILLISECONDS_IN_DAY) < resetTime) {
-            calendar.add(Calendar.DATE, -1);
+        if (temp.get(Calendar.MILLISECONDS_IN_DAY) < resetTime) {
+            temp.add(Calendar.DATE, -1);
         }
-        calendar.set(Calendar.MILLISECONDS_IN_DAY, 0);
-        return calendar;
+        temp.set(Calendar.MILLISECONDS_IN_DAY, 0);
+        return temp;
     }
 
     private ContentValues newLog(long timeInMillis) {
@@ -107,6 +129,20 @@ public class TblLogHelper {
         values.put(SQLHelper.COL_AFTERNOON_LOG, 0);
         values.put(SQLHelper.COL_EVENING_LOG, 0);
         values.put(SQLHelper.COL_NIGHT_LOG, 0);
+
+        return values;
+    }
+
+    private ContentValues getLog(Log log) {
+        ContentValues values = new ContentValues();
+
+        values.put(SQLHelper.COL_DAY_LOG, log.getCalendar().getTimeInMillis());
+        values.put(SQLHelper.COL_SCORE_LOG, log.getAddScore());
+        values.put(SQLHelper.COL_MORNING_LOG, log.isMorning());
+        values.put(SQLHelper.COL_NOON_LOG, log.isNoon());
+        values.put(SQLHelper.COL_AFTERNOON_LOG, log.isAfternoon());
+        values.put(SQLHelper.COL_EVENING_LOG, log.isEvening());
+        values.put(SQLHelper.COL_NIGHT_LOG, log.isNight());
 
         return values;
     }

@@ -2,6 +2,7 @@ package com.example.luyentap.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.icu.util.Calendar;
@@ -10,6 +11,7 @@ import android.preference.PreferenceManager;
 
 import com.example.luyentap.Helpers.SQLHelper;
 import com.example.luyentap.Helpers.TblLogHelper;
+import com.example.luyentap.R;
 
 import java.util.HashSet;
 
@@ -23,11 +25,14 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        new SQLHelper(this).deleteDatabase();
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences = getSharedPreferences(getString(R.string.app_shared_pref), Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         helper = new TblLogHelper(this);
+
+        // TODO: khoi tao lai
+//        initSharePreferences();
+//        new SQLHelper(this).deleteDatabase();
 
         if (!sharedPreferences.contains("last-log")) {
             initSharePreferences();

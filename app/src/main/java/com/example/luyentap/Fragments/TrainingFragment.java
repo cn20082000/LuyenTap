@@ -1,5 +1,6 @@
 package com.example.luyentap.Fragments;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -14,6 +15,9 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.luyentap.Helpers.TblExHelper;
+import com.example.luyentap.Helpers.TblLogHelper;
+import com.example.luyentap.Models.Ex;
 import com.example.luyentap.Models.Log;
 import com.example.luyentap.R;
 import com.google.android.material.button.MaterialButton;
@@ -30,6 +34,8 @@ import java.util.Set;
 public class TrainingFragment extends Fragment {
 
     private SharedPreferences sharedPreferences;
+    private TblExHelper exHelper;
+    private TblLogHelper logHelper;
 
     private TextView tvOpera, tvEx, tvStatus;
     private MaterialButton btnComplete;
@@ -50,7 +56,10 @@ public class TrainingFragment extends Fragment {
                              @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_training, container, false);
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(view.getContext());
+        sharedPreferences = view.getContext().getSharedPreferences(getString(R.string.app_shared_pref),
+                Context.MODE_PRIVATE);
+        exHelper = new TblExHelper(view.getContext());
+        logHelper = new TblLogHelper(view.getContext());
 
         partEx = view.getResources().getStringArray(R.array.part_ex);
 
@@ -77,6 +86,29 @@ public class TrainingFragment extends Fragment {
 
         showStatus();
         showEx();
+
+        btnComplete.setOnLongClickListener(v -> {
+            switch (now) {
+                case 0: {
+                    log.setMorning(true);
+                }
+                case 1: {
+                    log.setNoon(true);
+                }
+                case 2: {
+                    log.setAfternoon(true);
+                }
+                case 3: {
+                    log.setEvening(true);
+                }
+                case 4: {
+                    log.setNight(true);
+                }
+            }
+            logHelper.updateLog(log);
+            showStatus();
+            return true;
+        });
     }
 
     private void showStatus() {
@@ -137,22 +169,36 @@ public class TrainingFragment extends Fragment {
     private void showEx() {
         Set<String> ex = sharedPreferences.getStringSet(partEx[pos],
                 new HashSet<>());
+        String str = setToString(ex);
 
-        if (ex.isEmpty()) {
+        if (str.equals("")) {
             tvOpera.setText(R.string.no_ex);
         } else {
             tvOpera.setText(R.string.has_ex);
-            List<Integer> list = setToArray(ex);
+            tvEx.setText(str);
         }
     }
 
-    private List<Integer> setToArray(Set<String> set) {
-        List<Integer> result = new ArrayList<>();
-        String[] arr = {};
-        arr = set.toArray(arr);
+    private String setToString(Set<String> set) {
+        List<Ex> exes = new ArrayList<>();
+        String[] arr = set.toArray(new String[0]);
 
         for (String s : arr) {
-            result.add(Integer.parseInt(s));
+            int id = Integer.parseInt(s);
+            Ex ex = exHelper.getEx(id);
+            if (ex.getId() >= 0) {
+                exes.add(ex);
+            }
+        }
+
+        String result = "";
+
+        if (!exes.isEmpty()) {
+            for (Ex ex: exes) {
+                result += String.valueOf(ex.getItem()) + " ";
+                result += ex.getName() + "\n";
+            }
+            result = result.substring(0, result.length() - 1);
         }
 
         return result;

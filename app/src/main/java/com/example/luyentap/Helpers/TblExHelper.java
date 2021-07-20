@@ -2,6 +2,7 @@ package com.example.luyentap.Helpers;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,9 +10,11 @@ import android.icu.util.Calendar;
 
 import com.example.luyentap.Models.Ex;
 import com.example.luyentap.Models.Log;
+import com.example.luyentap.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class TblExHelper {
     private SQLiteDatabase db;
@@ -84,6 +87,23 @@ public class TblExHelper {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             result.add(cursorToEx(cursor));
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        close();
+        return result;
+    }
+
+    public Ex getEx(int id) {
+        Ex result = new Ex(-1, "", 0, 0);
+        read();
+
+        Cursor cursor = db.query(SQLHelper.TBL_EX, allCollumn, SQLHelper.COL_ID_EX + " = ?",
+                new String[]{String.valueOf(id)}, null, null, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            result = cursorToEx(cursor);
             cursor.moveToNext();
         }
         cursor.close();
